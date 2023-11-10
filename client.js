@@ -149,6 +149,11 @@ function startDownload(url, onProgress, onComplete, onError) {
   // Обработка события окончания загрузки
   xhr.onload = () => {
     if (xhr.status === 200) {
+      // Получение размера файла из заголовков ответа
+      const fileSize = xhr.getResponseHeader('Content-Length') || xhr.getResponseHeader('content-length');
+      if (fileSize) {
+        console.log(`Размер файла: ${fileSize} байт`); // Вывод размера файла в консоль
+      }
       onComplete(xhr.response); // Вызов функции обратного вызова при успешной загрузке
     } else {
       onError(xhr.status); // Вызов функции обратного вызова при ошибке
